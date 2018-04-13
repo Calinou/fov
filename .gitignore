@@ -1,0 +1,6 @@
+# Go "vendor" directory
+vendor/
+
+# Compiled binaries
+fov
+fov.exe
