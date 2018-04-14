@@ -95,11 +95,15 @@ func main() {
 		if strings.Count(c.Args().Get(0), "h") == 1 {
 			// Horizontal FOV given, calculate the vertical FOV
 			fov.horizontal, _ = strconv.ParseFloat(strings.TrimSuffix(c.Args().Get(0), "h"), 64)
+			fov.vertical = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*1/fov.aspectRatio) * 360 / math.Pi
 			fov.newHorizontal = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*fov.newAspectRatio/fov.aspectRatio) * 360 / math.Pi
+			fov.newVertical = fov.vertical
 		} else if strings.Count(c.Args().Get(0), "v") == 1 {
 			// Vertical FOV given, calculate the horizontal FOV
 			fov.vertical, _ = strconv.ParseFloat(strings.TrimSuffix(c.Args().Get(0), "v"), 64)
-			fov.newVertical = math.Atan(math.Tan(fov.vertical*math.Pi/360)*fov.newAspectRatio/fov.aspectRatio) * 360 / math.Pi
+			fov.horizontal = math.Atan(math.Tan(fov.vertical*math.Pi/360)*fov.aspectRatio) * 360 / math.Pi
+			fov.newHorizontal = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*fov.newAspectRatio/fov.aspectRatio) * 360 / math.Pi
+			fov.newVertical = fov.vertical
 		} else {
 			fmt.Println("Error: Ambiguous FOV value given; the value must have" +
 				" a 'h' (horizontal) or 'v' (vertical) suffix.")
