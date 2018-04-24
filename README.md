@@ -56,6 +56,11 @@ GLOBAL OPTIONS:
    --version, -v  print the version
 ```
 
+## Resources
+
+- [Explanation of common FOV scaling modes such as Hor+, Vert-, …](http://www.wsgf.org/article/screen-change)
+- [*Field of view in video games* on Wikipedia](https://en.wikipedia.org/wiki/Field_of_view_in_video_games)
+
 ## License
 
 Copyright © 2018 Hugo Locurcio and contributors
