@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## Added
+
+- Colored output for better readability.
+
+## Changed
+
+- Aligned table row headings to the right for readability.
+- Increased margins in the table display.
+
 ## 0.1.0 - 2018-04-21
 
 - Initial versioned release.

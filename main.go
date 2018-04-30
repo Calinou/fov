@@ -24,6 +24,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/urfave/cli"
 	"log"
 	"math"
@@ -43,8 +44,8 @@ type Fov struct {
 	newAspectRatio float64 // The "new" aspect ratio to scale the FOV to
 }
 
-// Converts a fraction in 'x:y' or 'x/y' notation to a floating-point value.
-// Will return an error and exit if the input is not a fraction.
+// fractionToFloat converts a fraction in 'x:y' or 'x/y' notation to a floating-point value.
+// It will return an error and exit if the input is not a fraction.
 func fractionToFloat(fraction string) float64 {
 	var terms []string
 
@@ -53,7 +54,10 @@ func fractionToFloat(fraction string) float64 {
 	} else if strings.Count(fraction, "/") == 1 {
 		terms = strings.Split(fraction, "/")
 	} else {
-		fmt.Println("Error: Bad format for aspect ratio; the ratio must have a 'x:y' or 'x/y' format.")
+		fmt.Println(
+			color.HiRedString("Error:"),
+			"Bad format for aspect ratio; the ratio must have a 'x:y' or 'x/y' format.",
+		)
 		os.Exit(1)
 	}
 
@@ -63,10 +67,15 @@ func fractionToFloat(fraction string) float64 {
 	return numerator / denominator
 }
 
+// degreeString returns a string with the degree symbol appended, e.g. "90°".
+func degreeString(float float64) string {
+	return strconv.FormatFloat(float, 'f', 2, 64) + "°"
+}
+
 func main() {
 	app := cli.NewApp()
 	app.Name = "fov"
-	app.Version = "0.0.1"
+	app.Version = "0.1.0"
 	app.Usage = "Calculate horizontal or vertical FOV values for a given aspect ratio"
 	app.UsageText = app.Name + " <FOV><h|v> <aspect ratio> [new aspect ratio]"
 
@@ -75,8 +84,10 @@ func main() {
 		numArgs := len(c.Args())
 
 		if numArgs < 2 {
-			fmt.Printf("Error: Not enough arguments supplied; expected 2 or 3 arguments (got %d).\n"+
-				"Usage: "+app.UsageText+"\n",
+			fmt.Printf(
+				color.HiRedString("Error:")+
+					" Not enough arguments supplied; expected 0 or 1 arguments (got %d).\n"+
+					"Usage: "+app.UsageText+"\n",
 				numArgs)
 			os.Exit(1)
 		}
@@ -105,32 +116,39 @@ func main() {
 			fov.newHorizontal = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*fov.newAspectRatio/fov.aspectRatio) * 360 / math.Pi
 			fov.newVertical = fov.vertical
 		} else {
-			fmt.Println("Error: Ambiguous FOV value given; the value must have" +
-				" a 'h' (horizontal) or 'v' (vertical) suffix.")
+			fmt.Println(
+				color.HiRedString("Error:"),
+				"Ambiguous FOV value given; the value must have",
+				"a 'h' (horizontal) or 'v' (vertical) suffix.",
+			)
 			os.Exit(1)
 		}
 
 		switch numArgs {
 		case 3:
 			// An aspect ratio to convert is supplied
-			fmt.Printf("\t\tOrig.\tConverted\n"+
-				"Horizontal FOV\t%.2f°\t%.2f°\n"+
-				"Vertical FOV\t%.2f°\t%.2f°\n"+
-				"Aspect ratio\t%s\t%s\n",
-				fov.horizontal,
-				fov.newHorizontal,
-				fov.vertical,
-				fov.newVertical,
-				aspectRatioString,
-				newAspectRatioString)
+			fmt.Printf(
+				"\n                   Orig.\tConverted\n"+
+				"  Horizontal FOV   %s\t%s\n"+
+				"    Vertical FOV   %s\t%s\n"+
+				"    Aspect ratio   %s\t\t%s\n",
+				color.HiCyanString(degreeString(fov.horizontal)),
+				color.HiYellowString(degreeString(fov.newHorizontal)),
+				color.HiCyanString(degreeString(fov.vertical)),
+				color.HiYellowString(degreeString(fov.newVertical)),
+				color.HiCyanString(aspectRatioString),
+				color.HiYellowString(newAspectRatioString),
+			)
 		case 2:
 			// No aspect ratio to convert to is supplied
-			fmt.Printf("Horizontal FOV\t%.2f°\n"+
-				"Vertical FOV\t%.2f°\n"+
-				"Aspect ratio\t%s\n",
-				fov.horizontal,
-				fov.vertical,
-				aspectRatioString)
+			fmt.Printf(
+				"\n  Horizontal FOV   %s\n"+
+				"    Vertical FOV   %s\n"+
+				"    Aspect ratio   %s\n",
+				color.HiCyanString(degreeString(fov.horizontal)),
+				color.HiCyanString(degreeString(fov.vertical)),
+				color.HiCyanString(aspectRatioString),
+			)
 		}
 
 		return nil
