@@ -76,7 +76,7 @@ func degreeString(float float64) string {
 func main() {
 	app := cli.NewApp()
 	app.Name = "fov"
-	app.Version = "0.2.0"
+	app.Version = "0.2.1"
 	app.Usage = "Calculate horizontal or vertical FOV values for a given aspect ratio"
 	app.UsageText = app.Name + " <FOV><h|v> <aspect ratio> [new aspect ratio]"
 
