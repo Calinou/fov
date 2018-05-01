@@ -54,7 +54,8 @@ func fractionToFloat(fraction string) float64 {
 	} else if strings.Count(fraction, "/") == 1 {
 		terms = strings.Split(fraction, "/")
 	} else {
-		fmt.Println(
+		fmt.Fprintln(
+			color.Output,
 			color.HiRedString("Error:"),
 			"Bad format for aspect ratio; the ratio must have a 'x:y' or 'x/y' format.",
 		)
@@ -84,7 +85,8 @@ func main() {
 		numArgs := len(c.Args())
 
 		if numArgs < 2 {
-			fmt.Printf(
+			fmt.Fprintf(
+				color.Output,
 				color.HiRedString("Error:")+
 					" Not enough arguments supplied; expected 0 or 1 arguments (got %d).\n"+
 					"Usage: "+app.UsageText+"\n",
@@ -116,7 +118,8 @@ func main() {
 			fov.newHorizontal = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*fov.newAspectRatio/fov.aspectRatio) * 360 / math.Pi
 			fov.newVertical = fov.vertical
 		} else {
-			fmt.Println(
+			fmt.Fprintln(
+				color.Output,
 				color.HiRedString("Error:"),
 				"Ambiguous FOV value given; the value must have",
 				"a 'h' (horizontal) or 'v' (vertical) suffix.",
@@ -127,7 +130,8 @@ func main() {
 		switch numArgs {
 		case 3:
 			// An aspect ratio to convert is supplied
-			fmt.Printf(
+			fmt.Fprintf(
+				color.Output,
 				"\n                   Orig.\tConverted\n"+
 				"  Horizontal FOV   %s\t%s\n"+
 				"    Vertical FOV   %s\t%s\n"+
@@ -141,7 +145,8 @@ func main() {
 			)
 		case 2:
 			// No aspect ratio to convert to is supplied
-			fmt.Printf(
+			fmt.Fprintf(
+				color.Output,
 				"\n  Horizontal FOV   %s\n"+
 				"    Vertical FOV   %s\n"+
 				"    Aspect ratio   %s\n",

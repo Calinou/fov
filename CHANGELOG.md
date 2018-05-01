@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- Colored output on Windows now works as expected.
+
 ## [0.2.0] - 2018-04-30
 
-## Added
+### Added
 
 - Colored output for better readability.
 
-## Changed
+### Changed
 
 - Aligned table row headings to the right for readability.
 - Increased margins in the table display.
