@@ -10,7 +10,7 @@ value in various 3D applications, such as games.
 
 #### Determine the vertical FOV from an horizontal FOV
 
-```
+```text
 $ fov 90h 4:3
 Horizontal FOV  90.00°
 Vertical FOV    73.74°
@@ -19,7 +19,7 @@ Aspect ratio    4:3
 
 #### Determine the horizontal FOV from a vertical FOV
 
-```
+```text
 $ fov 70v 16:9
 Horizontal FOV  102.45°
 Vertical FOV    70.00°
@@ -28,7 +28,7 @@ Aspect ratio    16:9
 
 #### Convert an horizontal FOV to a wider aspect ratio
 
-```
+```text
 $ fov 90h 4:3 16:9
                 Orig.   Converted
 Horizontal FOV  90.00°  106.26°
@@ -38,7 +38,7 @@ Aspect ratio    4:3     16:9
 
 ### Reference
 
-```
+```text
 NAME:
    fov - Calculate horizontal or vertical FOV values for a given aspect ratio
 
