@@ -24,16 +24,17 @@ package main
 
 import (
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/urfave/cli"
 	"log"
 	"math"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/fatih/color"
+	"github.com/urfave/cli"
 )
 
-type Fov struct {
+type fov struct {
 	horizontal  float64 // The "old" horizontal field of view
 	vertical    float64 // The "old" vertical field of view
 	aspectRatio float64 // The "old" aspect ratio
@@ -81,7 +82,7 @@ func main() {
 	app.UsageText = app.Name + " <FOV><h|v> <aspect ratio> [new aspect ratio]"
 
 	app.Action = func(c *cli.Context) error {
-		var fov Fov
+		var fov fov
 		numArgs := len(c.Args())
 
 		if numArgs < 2 {
@@ -133,9 +134,9 @@ func main() {
 			fmt.Fprintf(
 				color.Output,
 				"\n                   Orig.\tConverted\n"+
-				"  Horizontal FOV   %s\t%s\n"+
-				"    Vertical FOV   %s\t%s\n"+
-				"    Aspect ratio   %s\t\t%s\n",
+					"  Horizontal FOV   %s\t%s\n"+
+					"    Vertical FOV   %s\t%s\n"+
+					"    Aspect ratio   %s\t\t%s\n",
 				color.HiCyanString(degreeString(fov.horizontal)),
 				color.HiYellowString(degreeString(fov.newHorizontal)),
 				color.HiCyanString(degreeString(fov.vertical)),
@@ -148,8 +149,8 @@ func main() {
 			fmt.Fprintf(
 				color.Output,
 				"\n  Horizontal FOV   %s\n"+
-				"    Vertical FOV   %s\n"+
-				"    Aspect ratio   %s\n",
+					"    Vertical FOV   %s\n"+
+					"    Aspect ratio   %s\n",
 				color.HiCyanString(degreeString(fov.horizontal)),
 				color.HiCyanString(degreeString(fov.vertical)),
 				color.HiCyanString(aspectRatioString),
