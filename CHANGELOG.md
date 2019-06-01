@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.0.0] - 2019-06-01
+
 ### Changed
 
 - Go modules are now used to manage dependencies.
@@ -33,6 +35,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Initial versioned release.
 
-[Unreleased]: https://github.com/Calinou/fov/compare/v0.2.1...HEAD
+[Unreleased]: https://github.com/Calinou/fov/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Calinou/fov/compare/v0.2.1...v1.0.0
 [0.2.1]: https://github.com/Calinou/fov/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/Calinou/fov/compare/v0.1.0...v0.2.0

@@ -7,15 +7,15 @@ builds:
     goarch:
       - amd64
 
-archive:
-  files:
-    - README.md
-    - LICENSE.md
-  format_overrides:
-    - goos: windows
-      format: zip
-  replacements:
-    amd64: x86_64
-    386: x86
-    darwin: macos
-  wrap_in_directory: true
+archives:
+  - files:
+      - README.md
+      - LICENSE.md
+    format_overrides:
+      - goos: windows
+        format: zip
+    replacements:
+      amd64: x86_64
+      386: x86
+      darwin: macos
+    wrap_in_directory: true
