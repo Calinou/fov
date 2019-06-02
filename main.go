@@ -34,7 +34,9 @@ import (
 	"github.com/urfave/cli"
 )
 
-type fieldOfView struct {
+// FieldOfView stores a field of view with horizontal FOV, vertical FOV
+// and aspect ratio information.
+type FieldOfView struct {
 	horizontal  float64 // The "old" horizontal field of view
 	vertical    float64 // The "old" vertical field of view
 	aspectRatio float64 // The "old" aspect ratio
@@ -82,7 +84,7 @@ func main() {
 	app.UsageText = app.Name + " <FOV><h|v> <aspect ratio> [new aspect ratio]"
 
 	app.Action = func(c *cli.Context) error {
-		var fov fieldOfView
+		var fov FieldOfView
 		numArgs := len(c.Args())
 
 		if numArgs < 2 {
