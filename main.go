@@ -34,7 +34,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-type fov struct {
+type fieldOfView struct {
 	horizontal  float64 // The "old" horizontal field of view
 	vertical    float64 // The "old" vertical field of view
 	aspectRatio float64 // The "old" aspect ratio
@@ -82,7 +82,7 @@ func main() {
 	app.UsageText = app.Name + " <FOV><h|v> <aspect ratio> [new aspect ratio]"
 
 	app.Action = func(c *cli.Context) error {
-		var fov fov
+		var fov fieldOfView
 		numArgs := len(c.Args())
 
 		if numArgs < 2 {
@@ -108,15 +108,35 @@ func main() {
 
 		if strings.Count(c.Args().Get(0), "h") == 1 {
 			// Horizontal FOV given, calculate the vertical FOV
-			fov.horizontal, _ = strconv.ParseFloat(strings.TrimSuffix(c.Args().Get(0), "h"), 64)
-			fov.vertical = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*1/fov.aspectRatio) * 360 / math.Pi
-			fov.newHorizontal = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*fov.newAspectRatio/fov.aspectRatio) * 360 / math.Pi
+			fov.horizontal, _ = strconv.ParseFloat(
+				strings.TrimSuffix(c.Args().Get(0), "h"), 64)
+
+			fov.vertical = math.Atan(
+				math.Tan(fov.horizontal*math.Pi/360)*
+					1/fov.aspectRatio) *
+				360 / math.Pi
+
+			fov.newHorizontal = math.Atan(
+				math.Tan(fov.horizontal*math.Pi/360)*
+					fov.newAspectRatio/fov.aspectRatio) *
+				360 / math.Pi
+
 			fov.newVertical = fov.vertical
 		} else if strings.Count(c.Args().Get(0), "v") == 1 {
 			// Vertical FOV given, calculate the horizontal FOV
-			fov.vertical, _ = strconv.ParseFloat(strings.TrimSuffix(c.Args().Get(0), "v"), 64)
-			fov.horizontal = math.Atan(math.Tan(fov.vertical*math.Pi/360)*fov.aspectRatio) * 360 / math.Pi
-			fov.newHorizontal = math.Atan(math.Tan(fov.horizontal*math.Pi/360)*fov.newAspectRatio/fov.aspectRatio) * 360 / math.Pi
+			fov.vertical, _ = strconv.ParseFloat(
+				strings.TrimSuffix(c.Args().Get(0), "v"), 64)
+
+			fov.horizontal = math.Atan(
+				math.Tan(fov.vertical*math.Pi/360)*
+					fov.aspectRatio) *
+				360 / math.Pi
+
+			fov.newHorizontal = math.Atan(
+				math.Tan(fov.horizontal*math.Pi/360)*
+					fov.newAspectRatio/fov.aspectRatio) *
+				360 / math.Pi
+
 			fov.newVertical = fov.vertical
 		} else {
 			fmt.Fprintln(

@@ -24,44 +24,64 @@ package main
 
 import (
 	"os/exec"
+	"runtime"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 )
 
 // The `fov` binary must be built before running tests
 
-func TestOneAspectRatioHorizontal(t *testing.T) {
-	out, err := exec.Command("./fov", "90h", "4:3").Output()
+type TestSuite struct {
+	suite.Suite
+	execPath string // Path to the binary (different on Windows)
+}
 
-	assert.Nil(t, err)
+// Entry point function for all tests
+func TestTestSuite(t *testing.T) {
+	suite.Run(t, new(TestSuite))
+}
+
+func (suite *TestSuite) SetupTest() {
+	if runtime.GOOS == "windows" {
+		suite.execPath = "fov.exe"
+	} else {
+		suite.execPath = "./fov"
+	}
+}
+
+func (suite *TestSuite) TestOneAspectRatioHorizontal() {
+	out, err := exec.Command(suite.execPath, "90h", "4:3").Output()
+
+	assert.Nil(suite.T(), err)
 	assert.True(
-		t,
+		suite.T(),
 		(strings.Contains(string(out), "90.00°") &&
 			strings.Contains(string(out), "73.74°") &&
 			strings.Contains(string(out), "4:3")),
 		"Expected values are present in output")
 }
 
-func TestOneAspectRatioVertical(t *testing.T) {
-	out, err := exec.Command("./fov", "70v", "4:3").Output()
+func (suite *TestSuite) TestOneAspectRatioVertical() {
+	out, err := exec.Command(suite.execPath, "70v", "4:3").Output()
 
-	assert.Nil(t, err)
+	assert.Nil(suite.T(), err)
 	assert.True(
-		t,
+		suite.T(),
 		(strings.Contains(string(out), "86.07°") &&
 			strings.Contains(string(out), "70.00°") &&
 			strings.Contains(string(out), "4:3")),
 		"Expected values are present in output")
 }
 
-func TestTwoAspectRatiosHorizontal(t *testing.T) {
-	out, err := exec.Command("./fov", "90h", "4:3", "16:9").Output()
+func (suite *TestSuite) TestTwoAspectRatiosHorizontal() {
+	out, err := exec.Command(suite.execPath, "90h", "4:3", "16:9").Output()
 
-	assert.Nil(t, err)
+	assert.Nil(suite.T(), err)
 	assert.True(
-		t,
+		suite.T(),
 		(strings.Contains(string(out), "90.00°") &&
 			strings.Contains(string(out), "73.74°") &&
 			strings.Contains(string(out), "4:3") &&
@@ -71,12 +91,12 @@ func TestTwoAspectRatiosHorizontal(t *testing.T) {
 		"Expected values are present in output")
 }
 
-func TestTwoAspectRatiosVertical(t *testing.T) {
-	out, err := exec.Command("./fov", "70v", "4:3", "16:9").Output()
+func (suite *TestSuite) TestTwoAspectRatiosVertical() {
+	out, err := exec.Command(suite.execPath, "70v", "4:3", "16:9").Output()
 
-	assert.Nil(t, err)
+	assert.Nil(suite.T(), err)
 	assert.True(
-		t,
+		suite.T(),
 		(strings.Contains(string(out), "86.07°") &&
 			strings.Contains(string(out), "70.00°") &&
 			strings.Contains(string(out), "4:3") &&
