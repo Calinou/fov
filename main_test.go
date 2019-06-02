@@ -32,7 +32,7 @@ import (
 
 // The `fov` binary must be built before running tests
 
-func TestOneAspectRatio(t *testing.T) {
+func TestOneAspectRatioHorizontal(t *testing.T) {
 	out, err := exec.Command("./fov", "90h", "4:3").Output()
 
 	assert.Nil(t, err)
@@ -44,7 +44,19 @@ func TestOneAspectRatio(t *testing.T) {
 		"Expected values are present in output")
 }
 
-func TestTwoAspectRatios(t *testing.T) {
+func TestOneAspectRatioVertical(t *testing.T) {
+	out, err := exec.Command("./fov", "70v", "4:3").Output()
+
+	assert.Nil(t, err)
+	assert.True(
+		t,
+		(strings.Contains(string(out), "86.07°") &&
+			strings.Contains(string(out), "70.00°") &&
+			strings.Contains(string(out), "4:3")),
+		"Expected values are present in output")
+}
+
+func TestTwoAspectRatiosHorizontal(t *testing.T) {
 	out, err := exec.Command("./fov", "90h", "4:3", "16:9").Output()
 
 	assert.Nil(t, err)
@@ -55,6 +67,21 @@ func TestTwoAspectRatios(t *testing.T) {
 			strings.Contains(string(out), "4:3") &&
 			strings.Contains(string(out), "106.26°") &&
 			strings.Contains(string(out), "73.74°") &&
+			strings.Contains(string(out), "16:9")),
+		"Expected values are present in output")
+}
+
+func TestTwoAspectRatiosVertical(t *testing.T) {
+	out, err := exec.Command("./fov", "70v", "4:3", "16:9").Output()
+
+	assert.Nil(t, err)
+	assert.True(
+		t,
+		(strings.Contains(string(out), "86.07°") &&
+			strings.Contains(string(out), "70.00°") &&
+			strings.Contains(string(out), "4:3") &&
+			strings.Contains(string(out), "102.45°") &&
+			strings.Contains(string(out), "70.00°") &&
 			strings.Contains(string(out), "16:9")),
 		"Expected values are present in output")
 }
